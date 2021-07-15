@@ -1,4 +1,4 @@
-import Beam from "./src/Beam";
+import Beam from "./Beam";
 
 //For creating a custom Beam object with tokenBuilder and urlPrefix
 export default Beam
