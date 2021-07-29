@@ -8,6 +8,7 @@ async function createFetchRequest({
 	customConfig, 
 	tokenBuilder,
 	urlPrefix = '', 
+	fetchHandler
 }: FetchRequestParams) {
 
 	//if the url is a subURL (starts with /) append the base url automatically. Otherwise use it as is
@@ -32,7 +33,7 @@ async function createFetchRequest({
 
 	try {
 
-		const response = await fetch(`${baseURL}${endpoint}`, fetchConfig)
+		const response = await fetchHandler(`${baseURL}${endpoint}`, fetchConfig)
 
 		if (response.ok) {
 			return {

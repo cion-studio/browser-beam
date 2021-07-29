@@ -2,13 +2,15 @@ import createFetchRequest from './createFetchRequest'
 import { BeamConfigParams, FetchRequestParams, RequestResponse } from './interfaces'
 
 
-class Beam {
+const beamCreator = (fetchHandler: any) => class Beam {
 	tokenBuilder?
 	urlPrefix?
+	fetchHandler?
 
 	constructor({ tokenBuilder, urlPrefix }: BeamConfigParams = {}) {
 		this.tokenBuilder = tokenBuilder
 		this.urlPrefix = urlPrefix ? urlPrefix : ''
+		this.fetchHandler = fetchHandler
 	}
 
 	//Set options
@@ -20,6 +22,13 @@ class Beam {
 		if (urlPrefix) {
 			this.urlPrefix = urlPrefix
 		}
+	}
+	
+	getToken(){
+		if(this.tokenBuilder){
+			return this.tokenBuilder()
+		}
+		return Promise.reject('No token builder set for this Beam!')
 	}
 
 	//FETCH
@@ -36,7 +45,9 @@ class Beam {
 			body,
 			headers,
 			customConfig,
+			tokenBuilder: this.tokenBuilder,
 			urlPrefix: this.urlPrefix,
+			fetchHandler: this.fetchHandler
 		})
 	}
 
@@ -90,4 +101,4 @@ class Beam {
 	}
 }
 
-export default Beam
+export default beamCreator

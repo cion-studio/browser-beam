@@ -6,11 +6,13 @@ export interface FetchRequestParams {
 	customConfig?: any;
 	tokenBuilder?(): string | Promise<string>;
 	urlPrefix?: string;
+	fetchHandler?: any;
 }
 
 export interface BeamConfigParams {
 	tokenBuilder?(): string | Promise<string>;
 	urlPrefix?: string;
+	fetchHandler?: any;
 }
 
 
