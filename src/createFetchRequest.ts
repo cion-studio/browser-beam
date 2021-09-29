@@ -8,7 +8,8 @@ async function createFetchRequest({
 	customConfig, 
 	tokenBuilder,
 	urlPrefix = '', 
-	fetchHandler
+	fetchHandler,
+	directOut,
 }: FetchRequestParams) {
 
 	//if the url is a subURL (starts with /) append the base url automatically. Otherwise use it as is
@@ -36,19 +37,11 @@ async function createFetchRequest({
 		const response = await fetchHandler(`${baseURL}${endpoint}`, fetchConfig)
 
 		if (response.ok) {
-			return {
-				status: response.status,
-				response: await response.json()
-			}
+			return response.json()
 
 		} else {
 
-			const errorMessage = {
-				status: response.status,
-				request: { ...fetchConfig, endpoint },
-				response: await response.json(),
-			}
-
+			const errorMessage = await response.json()
 			console.log({ beamError: errorMessage })
 
 			return Promise.reject(errorMessage)
@@ -56,10 +49,7 @@ async function createFetchRequest({
 
 	} catch (err) {
 
-		const errorMessage = {
-			request: { ...fetchConfig, endpoint },
-			response: { error: 'Network Error' }
-		}
+		const errorMessage =  { error: 'Network Error' }
 
 		console.log({ beamError: errorMessage })
 		return Promise.reject(errorMessage)

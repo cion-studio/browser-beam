@@ -6,15 +6,17 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	tokenBuilder?
 	urlPrefix?
 	fetchHandler?
+	directOut?:Boolean
 
-	constructor({ tokenBuilder, urlPrefix }: BeamConfigParams = {}) {
+	constructor({ tokenBuilder, urlPrefix, directOut }: BeamConfigParams = {}) {
 		this.tokenBuilder = tokenBuilder
 		this.urlPrefix = urlPrefix ? urlPrefix : ''
 		this.fetchHandler = fetchHandler
+		this.directOut = directOut
 	}
 
 	//Set options
-	configure({ tokenBuilder, urlPrefix }: BeamConfigParams) {
+	configure({ tokenBuilder, urlPrefix, directOut }: BeamConfigParams) {
 		if (tokenBuilder) {
 			this.tokenBuilder = tokenBuilder
 		}
@@ -22,6 +24,8 @@ const beamCreator = (fetchHandler: any) => class Beam {
 		if (urlPrefix) {
 			this.urlPrefix = urlPrefix
 		}
+		
+		this.directOut = directOut
 	}
 	
 	getToken(){
@@ -47,7 +51,8 @@ const beamCreator = (fetchHandler: any) => class Beam {
 			customConfig,
 			tokenBuilder: this.tokenBuilder,
 			urlPrefix: this.urlPrefix,
-			fetchHandler: this.fetchHandler
+			fetchHandler: this.fetchHandler,
+			directOut: this.directOut
 		})
 	}
 
