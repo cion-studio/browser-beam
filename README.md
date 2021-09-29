@@ -30,21 +30,35 @@ async function tokenBuilder(): Promise<string> {
 
 const beam = new Beam({
 	tokenBuilder: tokenBuilder,
-	urlPrefix: 'localhost:5000'
+	urlPrefix: 'localhost:5000',
+	directOut: true
 })
 
 export default beam
 ```
 
-Now that Beam is configured we can use it like this. This will make a POST request 
-to a server hosted on localhost:5000 with the given body. The JWT will be
-automatically generated from firebase auth as well. 
+## Direct out mode
+
+If this is set to true, then beam will always return the exact response received from the api (instead of an object {request, response})
+
 ```
-import beam from './configuredBeam'
-beam.post('/api/accounts'{
-    email: 'info@cionstudio.com'
-    name: 'Cion Studio'
+// configuredBeam.ts
+
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import Beam from 'browser-beam'
+
+async function tokenBuilder(): Promise<string> {
+	const token = await firebase.auth().currentUser?.getIdToken().catch(() => '')
+	return token || ''
+}
+
+const beam = new Beam({
+	tokenBuilder: tokenBuilder,
+	urlPrefix: 'localhost:5000'
 })
+
+export default beam
 ```
 
 ## Usage with Node
