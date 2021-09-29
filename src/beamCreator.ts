@@ -57,7 +57,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//GET
-	async get(endpoint: string, headers?: any): Promise<RequestResponse> {
+	async get(endpoint: string, headers?: any): Promise<any> {
 		return await this.fetch({
 			method: 'GET',
 			endpoint,
@@ -66,7 +66,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//POST
-	async post(endpoint: string, body?: any, headers?: any): Promise<RequestResponse> {
+	async post(endpoint: string, body?: any, headers?: any): Promise<any> {
 		return await this.fetch({
 			method: 'POST',
 			endpoint,
@@ -76,7 +76,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//DELETE
-	async del(endpoint: string, body?: any, headers?: any): Promise<RequestResponse> {
+	async del(endpoint: string, body?: any, headers?: any): Promise<any> {
 		return await this.fetch({
 			method: 'DELETE',
 			endpoint,
@@ -86,7 +86,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//PUT
-	async put(endpoint: string, body?: any, headers?: any): Promise<RequestResponse> {
+	async put(endpoint: string, body?: any, headers?: any): Promise<any> {
 		return await this.fetch({
 			method: 'PUT',
 			endpoint,
@@ -96,7 +96,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//PATCH
-	async patch(endpoint: string, body?: any, headers?: any): Promise<RequestResponse> {
+	async patch(endpoint: string, body?: any, headers?: any): Promise<any> {
 		return await this.fetch({
 			method: 'PATCH',
 			endpoint,
