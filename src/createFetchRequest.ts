@@ -37,19 +37,20 @@ async function createFetchRequest({
 		const response = await fetchHandler(`${baseURL}${endpoint}`, fetchConfig)
 
 		if (response.ok) {
-			return directOut ? response.json : {status: response.status, response: await response.json()}
+			const parsed = await response.json()
+			return directOut ? parsed : {status: response.status, response: parsed}
 
 		} else {
-
+			const contents = await response.json()
 			const errorMessage = {
 				status: response.status,
 				request: { ...fetchConfig, endpoint },
-				response: await response.json(),
+				response: contents,
 			}
 
 			console.log({ beamError: errorMessage })
 
-			return directOut ? Promise.reject(await response.json()) : Promise.reject(errorMessage)
+			return directOut ? Promise.reject(contents) : Promise.reject(errorMessage)
 		}
 
 	} catch (err) {
