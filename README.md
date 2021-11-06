@@ -61,6 +61,22 @@ const beam = new Beam({
 export default beam
 ```
 
+## Generic types support 
+
+You can specify the return type of any beam call like the example below
+
+```
+interface Tweet{
+	quote: string
+}
+
+beam.get<Tweet>('https://api.kanye.rest/').then((d)=>{
+	console.log(d.quote.toUpperCase())
+})
+```
+
+Note that by passing the parameter Tweet, we're setting the return type to Promise\<Tweet\>. You don't need to specify Promise, it is implied. 
+
 ## Usage with Node
 
 Since Node doesn't have a native fetch object, we have to provide one. You can use
