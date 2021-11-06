@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "tsc -p . && cp package.json dist && cp README.md dist",
-    "deploy": "yarn version && npm run build && cd dist && npm publish"
+    "deploy": "yarn version && npm run build && cd dist && npm publish",
+    "test": "ts-node ./tests/server.ts"
   },
   "author": "",
   "license": "ISC",

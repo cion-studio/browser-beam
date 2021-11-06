@@ -7,4 +7,11 @@ const beam = new Beam({
 	directOut: true
 })
 
-beam.get('https://api.kanye.rest/').then(console.log).catch(console.error)
+interface Tweet{
+	quote: string
+}
+
+beam.get<Tweet>('https://api.kanye.rest/').then((d)=>{
+	console.log(d.quote.toUpperCase())
+}).catch(console.error)
+

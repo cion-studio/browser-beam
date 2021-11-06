@@ -1,6 +1,6 @@
 import {FetchRequestParams} from './interfaces'
 
-async function createFetchRequest({ 
+async function createFetchRequest<value = any>({ 
 	method, 
 	endpoint, 
 	body, 
@@ -10,7 +10,7 @@ async function createFetchRequest({
 	urlPrefix = '', 
 	fetchHandler,
 	directOut,
-}: FetchRequestParams) {
+}: FetchRequestParams):Promise<value> {
 
 	//if the url is a subURL (starts with /) append the base url automatically. Otherwise use it as is
 	const baseURL = endpoint?.startsWith('/') ? urlPrefix : ''
