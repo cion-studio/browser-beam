@@ -13,7 +13,8 @@ async function createFetchRequest<value = any>({
 }: FetchRequestParams):Promise<value> {
 
 	//if the url is a subURL (starts with /) append the base url automatically. Otherwise use it as is
-	const baseURL = endpoint?.startsWith('/') ? urlPrefix : ''
+	const isRelative = endpoint?.startsWith('/')
+	const baseURL = isRelative ? urlPrefix : ''
 	
 	const fetchConfig = {
 		headers: {
@@ -24,7 +25,7 @@ async function createFetchRequest<value = any>({
 		...customConfig,
 	}
 
-	if (tokenBuilder) {
+	if (tokenBuilder && isRelative) {
 		fetchConfig.headers.Authorization = await tokenBuilder()
 	}
 

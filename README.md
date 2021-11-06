@@ -16,6 +16,9 @@ You can configure Beam to use a default base URL. Any request starting with a
 You can also configure Beam to use a JWT with every request by providing a token builder function.
 The example below uses a firebase auth JWT. 
 
+The JWT will only be sent to relative routes that start with your set base url (ie. calls starting with '/')
+Any absolute calls (where you specify the full url) will exclude the JWT to avoid leaking your auth credentials to outside sources. 
+
 ```
 // configuredBeam.ts
 
