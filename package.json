@@ -1,6 +1,6 @@
 {
   "name": "browser-beam",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Lightweight wrapper around fetch API, with better error handling and more powerful config options.",
   "main": "src/index.js",
   "scripts": {
