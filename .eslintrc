@@ -1,7 +1,6 @@
 {
 	"env": {
-		"browser": true,
-		"es2021": true
+		"node": true
 	},
 	"parser": "@typescript-eslint/parser",
 	"plugins": [
@@ -10,7 +9,10 @@
 	"rules": {
 		"indent": [
 			"error",
-			"tab"
+			"tab",
+			{
+				"SwitchCase": 1
+			}
 		],
 		"linebreak-style": [
 			"error",
@@ -57,6 +59,7 @@
 			"error",
 			"never"
 		],
-		"no-unused-vars": "warn"
+		"no-unused-vars": "warn",
+		"no-console": "warn"
 	}
 }

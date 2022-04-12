@@ -10,13 +10,15 @@ export interface FetchRequestParams {
 	directOut?: Boolean,
 }
 
+export type RequestPreprocessor = (params:FetchRequestParams) => FetchRequestParams
+
 export interface BeamConfigParams {
 	tokenBuilder?(): string | Promise<string>,
 	urlPrefix?: string,
 	fetchHandler?: any,
-	directOut?: boolean,
+	directOut?: boolean
+	preprocessor?: RequestPreprocessor,
 }
-
 
 export interface RequestResponse {
 	status: number,

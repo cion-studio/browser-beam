@@ -1,4 +1,4 @@
-import {FetchRequestParams} from './interfaces'
+import {FetchRequestParams} from './types'
 
 async function createFetchRequest<value = any>({ 
 	method, 
