@@ -1,13 +1,13 @@
-import {FetchRequestParams} from './types'
+import { FetchRequestParams } from './types'
 
-async function createFetchRequest<value = any>({ 
-	method, 
-	endpoint, 
-	body, 
-	headers, 
-	customConfig, 
+async function createFetchRequest<value = any>({
+	method,
+	endpoint,
+	body,
+	headers,
+	customConfig,
 	tokenBuilder,
-	urlPrefix = '', 
+	urlPrefix = '',
 	fetchHandler,
 	directOut,
 }: FetchRequestParams):Promise<value> {
@@ -39,7 +39,7 @@ async function createFetchRequest<value = any>({
 
 		if (response.ok) {
 			const parsed = await response.json()
-			return directOut ? parsed : {status: response.status, response: parsed}
+			return directOut ? parsed : { status: response.status, response: parsed }
 
 		} else {
 			const contents = await response.json()
@@ -49,7 +49,7 @@ async function createFetchRequest<value = any>({
 				response: contents,
 			}
 
-			console.log({ beamError: errorMessage })
+			console.log({ beamError: errorMessage }) //eslint-disable-line no-console
 
 			return directOut ? Promise.reject(contents) : Promise.reject(errorMessage)
 		}
@@ -61,7 +61,7 @@ async function createFetchRequest<value = any>({
 			response: { error: 'Network Error' }
 		}
 
-		console.log({ beamError: errorMessage })
+		console.log({ beamError: errorMessage }) //eslint-disable-line no-console
 		return Promise.reject(errorMessage)
 	}
 

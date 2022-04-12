@@ -7,6 +7,7 @@ const beam = new Beam({
 	directOut: true,
 	preprocessor: (params) => ({
 		...params,
+		headers: { ...params.headers, orgId: 100 },
 		endpoint: 'https://api.kanye.rest/',
 	})
 })
@@ -19,6 +20,6 @@ interface Tweet{
 	quote: string
 }
 
-beam.get<Tweet>('twitter.com').then((d)=>{
+beam.get<Tweet>('twitter.com').then((d) => {
 	console.log(d)
 }).catch(console.error)

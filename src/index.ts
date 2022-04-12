@@ -1,4 +1,4 @@
-import beamCreator from "./beamCreator";
+import beamCreator from './beamCreator'
 
 //For creating a custom Beam object with tokenBuilder and urlPrefix
 export default beamCreator(fetch)
@@ -7,9 +7,9 @@ export default beamCreator(fetch)
 const BeamClass = beamCreator(fetch)
 
 export const {
-	get, 
+	get,
 	put,
 	patch,
-	post, 
+	post,
 	del,
 } = new BeamClass()
