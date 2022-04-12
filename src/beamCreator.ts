@@ -1,5 +1,5 @@
 import createFetchRequest from './createFetchRequest'
-import { BeamConfigParams, FetchRequestParams, RequestPreprocessor, RequestResponse } from './types'
+import { BeamConfigParams, FetchRequestParams, RequestPreprocessor } from './types'
 
 const beamCreator = (fetchHandler: any) => class Beam {
 	tokenBuilder?
@@ -14,9 +14,9 @@ const beamCreator = (fetchHandler: any) => class Beam {
 		this.fetchHandler = fetchHandler
 		this.directOut = directOut
 		
-		if(preprocessor){
+		if (preprocessor){
 			this.preprocessor = preprocessor
-		} else{
+		} else {
 			this.preprocessor = (params) => params
 		}
 	}
@@ -39,7 +39,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 	
 	getToken(){
-		if(this.tokenBuilder){
+		if (this.tokenBuilder){
 			return this.tokenBuilder()
 		}
 		return Promise.reject('No token builder set for this Beam!')
