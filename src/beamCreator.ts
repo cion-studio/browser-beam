@@ -22,13 +22,17 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//Set options
-	configure({ tokenBuilder, urlPrefix, directOut }: BeamConfigParams) {
+	configure({ tokenBuilder, urlPrefix, directOut, preprocessor }: BeamConfigParams) {
 		if (tokenBuilder) {
 			this.tokenBuilder = tokenBuilder
 		}
 
 		if (urlPrefix) {
 			this.urlPrefix = urlPrefix
+		}
+		
+		if (preprocessor) {
+			this.preprocessor = preprocessor
 		}
 		
 		this.directOut = directOut
