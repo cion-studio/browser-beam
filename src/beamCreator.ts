@@ -1,18 +1,24 @@
 import createFetchRequest from './createFetchRequest'
-import { BeamConfigParams, FetchRequestParams, RequestResponse } from './interfaces'
-
+import { BeamConfigParams, FetchRequestParams, RequestPreprocessor, RequestResponse } from './types'
 
 const beamCreator = (fetchHandler: any) => class Beam {
 	tokenBuilder?
 	urlPrefix?
 	fetchHandler?
 	directOut?:Boolean
+	preprocessor: RequestPreprocessor
 
-	constructor({ tokenBuilder, urlPrefix, directOut }: BeamConfigParams = {}) {
+	constructor({ tokenBuilder, urlPrefix, directOut, preprocessor }: BeamConfigParams = {}) {
 		this.tokenBuilder = tokenBuilder
 		this.urlPrefix = urlPrefix ? urlPrefix : ''
 		this.fetchHandler = fetchHandler
 		this.directOut = directOut
+		
+		if(preprocessor){
+			this.preprocessor = preprocessor
+		} else{
+			this.preprocessor = (params) => params
+		}
 	}
 
 	//Set options
@@ -36,19 +42,15 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//FETCH
-	async fetch<value = any>({
-		method,
-		endpoint,
-		body,
-		headers,
-		customConfig
-	}: FetchRequestParams): Promise<value> {
+	async fetch<value = any>(params: FetchRequestParams): Promise<value> {
+		const newParams = this.preprocessor(params)
+		
 		return await createFetchRequest({
-			method,
-			endpoint,
-			body,
-			headers,
-			customConfig,
+			method: newParams.method,
+			endpoint: newParams.endpoint,
+			body: newParams.body,
+			headers: newParams.headers,
+			customConfig: newParams.customConfig,
 			tokenBuilder: this.tokenBuilder,
 			urlPrefix: this.urlPrefix,
 			fetchHandler: this.fetchHandler,
@@ -58,51 +60,51 @@ const beamCreator = (fetchHandler: any) => class Beam {
 
 	//GET
 	async get<value = any>(endpoint: string, headers?: any): Promise<value> {
-		return await this.fetch({
+		return await this.fetch(this.preprocessor({
 			method: 'GET',
 			endpoint,
 			headers
-		})
+		}))
 	}
 
 	//POST
 	async post<value = any>(endpoint: string, body?: any, headers?: any): Promise<value> {
-		return await this.fetch({
+		return await this.fetch(this.preprocessor({
 			method: 'POST',
 			endpoint,
 			body,
 			headers
-		})
+		}))
 	}
 
 	//DELETE
 	async del<value = any>(endpoint: string, body?: any, headers?: any): Promise<value> {
-		return await this.fetch({
+		return await this.fetch(this.preprocessor({
 			method: 'DELETE',
 			endpoint,
 			body,
 			headers
-		})
+		}))
 	}
 
 	//PUT
 	async put<value = any>(endpoint: string, body?: any, headers?: any): Promise<value> {
-		return await this.fetch({
+		return await this.fetch(this.preprocessor({
 			method: 'PUT',
 			endpoint,
 			body,
 			headers
-		})
+		}))
 	}
 
 	//PATCH
 	async patch<value = any>(endpoint: string, body?: any, headers?: any): Promise<value> {
-		return await this.fetch({
+		return await this.fetch(this.preprocessor({
 			method: 'PATCH',
 			endpoint,
 			body,
 			headers
-		})
+		}))
 	}
 }
 
