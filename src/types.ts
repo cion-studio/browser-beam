@@ -10,7 +10,11 @@ export interface FetchRequestParams {
 	directOut?: Boolean,
 }
 
-export type RequestPreprocessor = (params:FetchRequestParams) => FetchRequestParams
+export interface BeamVariables {
+	[variableName: string]: any
+}
+
+export type RequestPreprocessor = (params: FetchRequestParams) => FetchRequestParams
 
 export interface BeamConfigParams {
 	tokenBuilder?(): string | Promise<string>,
@@ -18,6 +22,7 @@ export interface BeamConfigParams {
 	fetchHandler?: any,
 	directOut?: boolean
 	preprocessor?: RequestPreprocessor,
+	variables?: BeamVariables
 }
 
 export interface RequestResponse {

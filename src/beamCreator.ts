@@ -1,20 +1,22 @@
 import createFetchRequest from './createFetchRequest'
-import { BeamConfigParams, FetchRequestParams, RequestPreprocessor } from './types'
+import { BeamConfigParams, BeamVariables, FetchRequestParams, RequestPreprocessor } from './types'
 
 const beamCreator = (fetchHandler: any) => class Beam {
 	tokenBuilder?
 	urlPrefix?
 	fetchHandler?
-	directOut?:Boolean
+	directOut?: Boolean
 	preprocessor: RequestPreprocessor
+	variables: BeamVariables
 
-	constructor({ tokenBuilder, urlPrefix, directOut, preprocessor }: BeamConfigParams = {}) {
+	constructor({ tokenBuilder, urlPrefix, directOut, preprocessor, variables }: BeamConfigParams = {}) {
 		this.tokenBuilder = tokenBuilder
 		this.urlPrefix = urlPrefix ? urlPrefix : ''
 		this.fetchHandler = fetchHandler
 		this.directOut = directOut
-		
-		if (preprocessor){
+		this.variables = variables || {}
+
+		if (preprocessor) {
 			this.preprocessor = preprocessor
 		} else {
 			this.preprocessor = (params) => params
@@ -22,7 +24,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	}
 
 	//Set options
-	configure({ tokenBuilder, urlPrefix, directOut, preprocessor }: BeamConfigParams) {
+	configure({ tokenBuilder, urlPrefix, directOut, preprocessor, variables }: BeamConfigParams) {
 		if (tokenBuilder) {
 			this.tokenBuilder = tokenBuilder
 		}
@@ -30,16 +32,20 @@ const beamCreator = (fetchHandler: any) => class Beam {
 		if (urlPrefix) {
 			this.urlPrefix = urlPrefix
 		}
-		
+
 		if (preprocessor) {
 			this.preprocessor = preprocessor
 		}
-		
+
+		if (variables) {
+			this.variables = variables
+		}
+
 		this.directOut = directOut
 	}
-	
-	getToken(){
-		if (this.tokenBuilder){
+
+	getToken() {
+		if (this.tokenBuilder) {
 			return this.tokenBuilder()
 		}
 		return Promise.reject('No token builder set for this Beam!')
@@ -48,7 +54,7 @@ const beamCreator = (fetchHandler: any) => class Beam {
 	//FETCH
 	async fetch<value = any>(params: FetchRequestParams): Promise<value> {
 		const newParams = this.preprocessor(params)
-		
+
 		return await createFetchRequest({
 			method: newParams.method,
 			endpoint: newParams.endpoint,
