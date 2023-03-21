@@ -23,6 +23,7 @@ interface Tweet {
 	quote: string
 }
 
-beam.get<Tweet>(beam.variables.URL).then((d) => {
-	console.log(d)
-}).catch(console.error)
+beam.get<Tweet>(beam.variables.URL, {
+	CONTENT_TYPE: 'image'
+}).then(e => console.log(e))
+	.catch(e => console.log(e))

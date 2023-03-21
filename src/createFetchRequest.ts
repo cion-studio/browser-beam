@@ -1,26 +1,25 @@
 import { FetchRequestParams } from './types'
 
+const DEFAULT_HEADERS = { 'Content-Type': 'application/json' }
+
 async function createFetchRequest<value = any>({
 	method,
 	endpoint,
 	body,
-	headers,
+	headers = DEFAULT_HEADERS,
 	customConfig,
 	tokenBuilder,
 	urlPrefix = '',
 	fetchHandler,
 	directOut,
-}: FetchRequestParams):Promise<value> {
+}: FetchRequestParams): Promise<value> {
 
 	//if the url is a subURL (starts with /) append the base url automatically. Otherwise use it as is
 	const isRelative = endpoint?.startsWith('/')
 	const baseURL = isRelative ? urlPrefix : ''
-	
+
 	const fetchConfig = {
-		headers: {
-			'Content-Type': 'application/json',
-			...headers
-		},
+		headers,
 		method,
 		...customConfig,
 	}
