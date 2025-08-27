@@ -14,5 +14,4 @@ export const {
 	put,
 	patch,
 	post,
-	del,
 } = new BeamClass()

@@ -7,21 +7,6 @@
 		"@typescript-eslint"
 	],
 	"rules": {
-		"indent": [
-			"error",
-			"tab",
-			{
-				"SwitchCase": 1
-			}
-		],
-		"linebreak-style": [
-			"error",
-			"unix"
-		],
-		"semi": [
-			"error",
-			"never"
-		],
 		"quotes": [
 			2,
 			"single",
